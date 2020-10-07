@@ -1,58 +1,51 @@
 package com.lee;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class Main {
 
     public static void main(String[] args) {
 
-        //read Pets into program and output to appropriate files
-        AnimalLogger.fileInput();
 
 
-        //make List of type AnimalLogger and read into appropriate files
-        AnimalLogger dogLogger = new AnimalLogger();
-        LinkedList <Dog> dogParlour = new LinkedList<>();
-        dogParlour.add(new Dog("dog",
-                "Snoopy",
-                "Poodle",
-                "brown",
-                "Peter",
-                "Chicken",
-                "stick",
-                1000));
 
-        dogParlour.add(new Dog("dog",
-                "Sasha",
-                "German Shepherd",
-                "black/brown",
-                "lee",
-                "Chicken",
-                "Lee's Car",
-                1500));
+        //make List of type Transactions and read into appropriate files
+        FileHandler fileLogger = new FileHandler();
+        ArrayList<Transactions> transactions = new ArrayList<>();
 
-        dogParlour.add(new Dog("dog",
-                "Rufus",
-                "Mixed",
-                "White",
-                "David",
-                "Beef",
-                "Ball",
-                1000));
-        
-        dogParlour.add(new Dog("dog",
-        		"Leeper",
-        		"BullDog",
-        		"Brown",
-        		"Josefin",
-        		"Beef",
-        		"Ball",
-        		1000));
-        
+        transactions.add(new Transactions(true, "12/12/2020", 1000.5));
+        transactions.add(new Transactions(false, "11/12/2020", 1000.5));
+        transactions.add(new Transactions(false, "10/12/2020", 0.5));
+        transactions.add(new Transactions(true, "9/12/2020", 500));
+        fileLogger.userInput(transactions);
 
-        dogLogger.userInput(dogParlour);
 
+
+        //read Transaction from Main file to Income and Expenses files
+        FileHandler.fileInput();
+
+
+        DataHandler dataHandler = new DataHandler("INCOME",2000.5);
+        boolean check = dataHandler.search(new Transactions(true,"12/12/2020", 1000.5));
+        System.out.println("check = " + check);
+//        dataHandler.readTransactions();
+
+//        System.out.println("Welcome to the BankApp \n");
+//        System.out.println("Please choose an option below: \n");
+//        System.out.println("(1) Show items \n");
+//        System.out.println("(2) Add items \n");
+//        System.out.println("(3) Edit items \n");
+//        System.out.println("(4) Save and Exit. \n");
+
+//        Scanner scanner = new Scanner((System.in));
+
+//        int iterations = 0;
+//        while(scanner.nextInt() != 4 && iterations < 2){
+//
+//            iterations++;
+//        }
 
 
 

@@ -20,31 +20,29 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-public class AnimalLogger extends Logger implements Loggable, java.io.Serializable {
+public class FileHandler extends Logger implements Loggable, java.io.Serializable {
 
-    private static String str;
+    public static String str;
 
-    public AnimalLogger() {
-    }
 
-    //separates Dog and Cat objects into files by reading and writing from Pet files.
+    //separates Transactions from files into separate files for income and expenses.
     public static void fileInput() {
 
-        try (Scanner scanner = new Scanner(new BufferedReader(new FileReader("Resources/AnimalClients.txt")));
-             PrintWriter dogFileWriter = new PrintWriter(new BufferedWriter(new FileWriter("Resources/DogGrooming.txt")));
-             PrintWriter catFileWriter = new PrintWriter(new BufferedWriter(new FileWriter("Resources/CatGrooming.txt")))) {
+        try (Scanner scanner = new Scanner(new BufferedReader(new FileReader("Resources/AllTransactions.txt")));
+             PrintWriter incomeWriter = new PrintWriter(new BufferedWriter(new FileWriter("Resources/IncomeTransactions.txt")));
+             PrintWriter expensesWriter = new PrintWriter(new BufferedWriter(new FileWriter("Resources/ExpensesTransactions.txt")))) {
 
             System.err.println("try-scanner-block reached");
             while (scanner.hasNext()) {
                 str = scanner.useDelimiter("\\.").nextLine();
 
-                if (str.contains("dog")) {
+                if (str.contains("INCOME")) {
                     System.err.println("str contains: " + str);
-                    dogFileWriter.write(str + "\n");
-                } else if (str.contains("cat")) {
-                    catFileWriter.write(str + "\n");
+                    incomeWriter.write(str + "\n");
+                } else if (str.contains("EXPENSE")) {
+                    expensesWriter.write(str + "\n");
                 } else {
-                    System.err.println("Invalid Pet type. Check if its a dog or cat to visit the Parlour");
+                    System.err.println("Invalid transaction type. Please check if its an income or expenses type of transaction.");
                 }
 
             }
@@ -58,12 +56,13 @@ public class AnimalLogger extends Logger implements Loggable, java.io.Serializab
     } //end fileInput
 
 
-    //sends user input from list objects to the Resources/AnimalAdditions.txt directory.
+    //sends Transactions user input from list objects to the Resources/TransactionsAdditions.txt directory.
     @Override
-    public void userInput(List<? extends Animal> list) {
+    public void userInput(List<? extends Transactions> list) {
 
         System.out.println("list: " + list + "\n");
-        try (PrintWriter fileWriter = new PrintWriter(new BufferedWriter(new FileWriter("Resources/AnimalAdditions.txt")))) {
+        try (PrintWriter fileWriter = new PrintWriter(new BufferedWriter(new FileWriter("Resources/AllTransactions.txt")));
+            ObjectOutputStream objWriter = new ObjectOutputStream(new FileOutputStream("Resources/TransactionsObjectFile.txt"))) {
 
             Iterator itr = list.iterator();
 
@@ -72,16 +71,15 @@ public class AnimalLogger extends Logger implements Loggable, java.io.Serializab
                 String obj = itr.next().toString();
                 System.err.println("scanner-while from userInput is reached for the " + i + "-nth time");
                 fileWriter.write(obj + "\n");
+                objWriter.writeObject(obj + "\n");
                 i++;
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.err.println("userInput error block is reached");
             e.printStackTrace();
-
         }
 
     } //end userInput
 
-    //method to transfer data from AnimalAdditions to AnimalClients with a Check for injectionCosts or something else.
 
 }

@@ -1,8 +1,6 @@
 package com.lee;
 
 
-//import java.util.List;
-
 import java.util.List;
 
 public abstract class Logger implements Loggable, java.io.Serializable {
@@ -12,7 +10,9 @@ public abstract class Logger implements Loggable, java.io.Serializable {
 
     }
 
-    public abstract void userInput(List<? extends Animal> list);
+
+
+    public abstract void userInput(List<? extends Transactions> list);
 
 
 

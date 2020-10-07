@@ -1,4 +1,0 @@
-dog, Snoopy, Poodle, brown, Peter, Chicken, stick, 1000.0
-dog, Sasha, German Shepherd, black/brown, lee, Chicken, Lee's Car, 1500.0
-dog, Rufus, Mixed, White, David, Beef, Ball, 1000.0
-dog, Leeper, BullDog, Brown, Josefin, Beef, Ball, 1000.0
