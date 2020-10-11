@@ -1,4 +1,4 @@
-/**
+/*
  * Class {@code AnimalLogger} is the subclass of abstract class Logger.
  * Logs information about Pets in files. The
  * information comes from files and from user
@@ -18,6 +18,7 @@ import java.io.*;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 public class FileHandler extends Logger implements Loggable, java.io.Serializable {
@@ -56,30 +57,46 @@ public class FileHandler extends Logger implements Loggable, java.io.Serializabl
     } //end fileInput
 
 
+    public <E> void writeObject(List<? extends E> eTypeObject) {
+
+        try (ObjectOutputStream oStream = new ObjectOutputStream(new FileOutputStream("object.bin"))) {
+
+            oStream.writeObject(eTypeObject);
+
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }// TODO Auto-generated catch block
+
+
+    }
+
+
     //sends Transactions user input from list objects to the Resources/TransactionsAdditions.txt directory.
-    @Override
     public void userInput(List<? extends Transactions> list) {
 
-        System.out.println("list: " + list + "\n");
+        System.err.println("list: " + list + "\n");
         try (PrintWriter fileWriter = new PrintWriter(new BufferedWriter(new FileWriter("Resources/AllTransactions.txt")));
-            ObjectOutputStream objWriter = new ObjectOutputStream(new FileOutputStream("Resources/TransactionsObjectFile.txt"))) {
+             ObjectOutputStream oStream = new ObjectOutputStream(new FileOutputStream("Resources/TransactionsObjectFile.txt"))) {
 
-            Iterator itr = list.iterator();
+            ListIterator<? extends Transactions> itr = list.listIterator();
+
 
             int i = 0;
             while (itr.hasNext() && i < 10) {
                 String obj = itr.next().toString();
                 System.err.println("scanner-while from userInput is reached for the " + i + "-nth time");
                 fileWriter.write(obj + "\n");
-                objWriter.writeObject(obj + "\n");
+                oStream.writeObject(obj + "\n");
                 i++;
             }
-        } catch (IOException e) {
-            System.err.println("userInput error block is reached");
+
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-    } //end userInput
 
-
+    } // end FileHandler
 }
