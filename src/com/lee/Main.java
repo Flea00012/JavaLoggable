@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
 
 
 
@@ -28,8 +28,9 @@ public class Main {
 
 
         DataHandler dataHandler = new DataHandler("INCOME",2000.5);
-        boolean check = dataHandler.search(new Transactions(true,"12/12/2020", 1000.5));
-        System.out.println("check = " + check);
+//        dataHandler.search(new Transactions(true,"12/12/2020", 1000.5));
+//        dataHandler.search("files");
+//        System.out.println("check = " + check);
 //        dataHandler.readTransactions();
 
 //        System.out.println("Welcome to the BankApp \n");

@@ -1,6 +1,10 @@
 package com.lee;
 
-public class Transactions implements java.io.Serializable {
+import java.io.Serializable;
+
+public class Transactions implements Serializable {
+
+
 
     enum TransactionType{
         INCOME, EXPENSE;
@@ -22,8 +26,19 @@ public class Transactions implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return new String(this.itemType + ", " + this.dateOfTransaction+ ", "  + this.monetaryValue) ;
+        return (this.itemType + ", " + this.dateOfTransaction + ", "  + this.monetaryValue) ;
     }
+
+
+//    @Override
+//    public int compareTo(Transactions transactions) {
+//        if(this.monetaryValue > transactions.getMonetaryValue()) {
+//            return 1;
+//        }else if (this.monetaryValue < transactions.getMonetaryValue()) {
+//            return -1;
+//        }
+//        return 0;
+//    }
 
     public String getDateOfTransaction() {
         return dateOfTransaction;
