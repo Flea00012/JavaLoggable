@@ -1,2 +1,0 @@
-dog, Zeus, 5, Terrier, black, John.
-dog, Fanny, 6, Poodle, Black, Dong.

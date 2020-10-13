@@ -57,38 +57,23 @@ public class FileHandler extends Logger implements Loggable, java.io.Serializabl
     } //end fileInput
 
 
-    public <E> void writeObject(List<? extends E> eTypeObject) {
-
-        try (ObjectOutputStream oStream = new ObjectOutputStream(new FileOutputStream("object.bin"))) {
-
-            oStream.writeObject(eTypeObject);
-
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }// TODO Auto-generated catch block
-
-
-    }
-
 
     //sends Transactions user input from list objects to the Resources/TransactionsAdditions.txt directory.
     public void userInput(List<? extends Transactions> list) {
 
         System.err.println("list: " + list + "\n");
-        try (PrintWriter fileWriter = new PrintWriter(new BufferedWriter(new FileWriter("Resources/AllTransactions.txt")));
-             ObjectOutputStream oStream = new ObjectOutputStream(new FileOutputStream("Resources/TransactionsObjectFile.txt"))) {
+        try (PrintWriter fileWriter = new PrintWriter(new BufferedWriter(new FileWriter("Resources/AllTransactions.txt")))) {
 
             ListIterator<? extends Transactions> itr = list.listIterator();
 
 
             int i = 0;
             while (itr.hasNext() && i < 10) {
-                String obj = itr.next().toString();
+
                 System.err.println("scanner-while from userInput is reached for the " + i + "-nth time");
+                String obj = itr.next().toString();
                 fileWriter.write(obj + "\n");
-                oStream.writeObject(obj + "\n");
+
                 i++;
             }
 

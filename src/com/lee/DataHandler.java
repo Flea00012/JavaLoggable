@@ -23,6 +23,7 @@ public class DataHandler implements Comparable<Transactions> {
 
 
 
+
     @Override
     public int compareTo(Transactions transactions) {
 
@@ -47,28 +48,27 @@ public class DataHandler implements Comparable<Transactions> {
     }
 
     public static void Sort(){
-        Collections.sort(stringList);
+//        Collections.sort(stringList);
 
     }
 
 
+
+
+
 //    reads data in string format for display to screen and byte format for display internally to the application
-    public <E extends Transactions> void readTransactions()  {
-        try(Scanner scanner = new Scanner(new BufferedReader(new FileReader("Resources/AllTransactions.txt")));
-            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("Resources/TransactionsObjectFile.txt"))){
+    public  void readTransactions()  {
+        try(Scanner scanner = new Scanner(new BufferedReader(new FileReader("Resources/AllTransactions.txt")))){
                 int iterations = 0;
 
             do {
-                E objPerson = (E) inputStream.readObject();
-                System.err.println("while loop reached");
-                System.out.println(objPerson);
+                System.err.println("while loop reached in readTransactions()");
 
-                inputStream.readObject();
                 String str = scanner.useDelimiter("\\.").nextLine();
                 stringList.add(str);
 
                 iterations++;
-            } while (scanner.hasNext() && inputStream.readObject() != null && iterations < 5);
+            } while (scanner.hasNext() && iterations < 5);
             System.out.println(stringList);
 
         } catch (Exception e) {
@@ -76,24 +76,24 @@ public class DataHandler implements Comparable<Transactions> {
         }
 
 
-        public static void search(String str) {
-        readTransactions();
+//        public static void search(String str) {
+//        readTransactions();
+//
+//
+////error since we have a string and object incompatibility
+////        int checker = Collections.binarySearch(objList, transactions, null);
+//
+//            if(checker >= 0){
+//                System.out.println("you found the item");
+//                System.out.println("the index of your transaction is = " + checker);
+//                return true;
+//            }else{
+//                System.err.println("transaction not found");
+//                return false;
+//            }
+
+    } //end readTransactions()
 
 
-//error since we have a string and object incompatibility
-//        int checker = Collections.binarySearch(objList, transactions, null);
-
-            if(checker >= 0){
-                System.out.println("you found the item");
-                System.out.println("the index of your transaction is = " + checker);
-                return true;
-            }else{
-                System.err.println("transaction not found");
-                return false;
-            }
-
-    }
-
-
-}
+} //end DataHandler class
 
