@@ -16,6 +16,9 @@ package com.lee;
 
 import java.io.*;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -84,4 +87,21 @@ public class FileHandler extends Logger implements Loggable, java.io.Serializabl
 
 
     } // end FileHandler
+
+    public void constantStorage() {
+        String contentToAppend = "Spain\r\n";
+
+        String fileName = "Resources/constantStorageFile.txt";
+        try {
+            Files.write(
+                    Paths.get(fileName),
+                    contentToAppend.getBytes(),
+                    StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 }

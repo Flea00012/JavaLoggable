@@ -4,6 +4,9 @@ package com.lee;
 
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 
@@ -40,7 +43,6 @@ public class DataHandler implements Comparable<Transactions> {
 
     public static void Edit(){
 
-
     }
 
     public static void Remove(){
@@ -52,14 +54,27 @@ public class DataHandler implements Comparable<Transactions> {
 
     }
 
+    public List<String> readToList(String fileName){
 
+        List<String> lines = Collections.emptyList();
+
+        try {
+            lines = Files.readAllLines(Paths.get(fileName),StandardCharsets.UTF_8);
+
+        }catch(IOException e){
+
+            System.err.println("catch of readToList was reached");
+            e.printStackTrace();
+        }
+        return lines;
+    }
 
 
 
 //    reads data in string format for display to screen and byte format for display internally to the application
-    public  void readTransactions()  {
-        try(Scanner scanner = new Scanner(new BufferedReader(new FileReader("Resources/AllTransactions.txt")))){
-                int iterations = 0;
+    public void readTransactions() {
+        try (Scanner scanner = new Scanner(new BufferedReader(new FileReader("Resources/AllTransactions.txt")))) {
+            int iterations = 0;
 
             do {
                 System.err.println("while loop reached in readTransactions()");
@@ -74,6 +89,9 @@ public class DataHandler implements Comparable<Transactions> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+    }//end readTransactions()
 
 
 //        public static void search(String str) {
@@ -91,8 +109,6 @@ public class DataHandler implements Comparable<Transactions> {
 //                System.err.println("transaction not found");
 //                return false;
 //            }
-
-    } //end readTransactions()
 
 
 } //end DataHandler class

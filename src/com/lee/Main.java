@@ -9,9 +9,7 @@ public class Main {
 
         /*
 
-        //make List of type Transactions and read into appropriate files
-        FileHandler fileLogger = new FileHandler();
-        ArrayList<Transactions> transactions = new ArrayList<>();
+
 
         transactions.add(new Transactions(true, "12/12/2020", 1000.5));
         transactions.add(new Transactions(false, "11/12/2020", 1000.5));
@@ -42,6 +40,11 @@ public class Main {
           	*/
 
 
+        //make List of type Transactions and read into appropriate files
+        FileHandler fileLogger = new FileHandler();
+        ArrayList<Transactions> transactions = new ArrayList<>();
+
+
             boolean ON = true;
             int counts = 0;
 
@@ -59,7 +62,8 @@ public class Main {
             option = scanner.nextInt();
 
             switch (option) {
-                case 1:
+
+                case 1: // show item menu
                     System.out.println("You chose to show the stored items. Please select from the given options. ");
                     System.out.println("(1) Show all items \n");
                     System.out.println("(2) Show expense(s) items \n");
@@ -70,10 +74,14 @@ public class Main {
                         switch (showOption) {
                             case 1:
                                 System.out.println("You chose to show all items.");
+                                //streams
+
 
                                 break;
                             case 2:
                                 System.out.println("You chose to show expense(s) only.");
+//                                transactions.stream()
+//                                        .filter(transactions1 -> transactions1.getMonetaryValue().equals(1000.0));
 
                                 break;
                             case 3:
@@ -86,7 +94,8 @@ public class Main {
                         }
 
                     break;
-                case 2:
+
+                case 2: // add item menu
                     System.out.println("You chose to add items. Please select from the given options. ");
 
                         System.out.println("(1) Add expense(s) \n");
@@ -96,10 +105,18 @@ public class Main {
 
                         switch (addOption) {
                             case 1:
-                                System.out.println("You chose to add expense(s).");
+                                System.out.println("You chose to add expense(s). Please insert the date (DD/MM/YYYY), followed by the monetary value below.");
+                                String expenseDate = scanner.next();
+                                double expenseMoney = scanner.nextDouble();
+                                transactions.add(new Transactions(true, expenseDate, expenseMoney));
+
                                 break;
                             case 2:
-                                System.out.println("You chose to add income(s).");
+                                System.out.println("You chose to add income(s). Please insert the date (DD/MM/YYYY), followed by the monetary value below.");
+                                String incomeDate = scanner.next();
+                                double incomeMoney = scanner.nextDouble();
+                                transactions.add(new Transactions(true, incomeDate, incomeMoney));
+
                                 break;
                             default:
                                 System.err.println("Please enter a valid option from the menu. You will be re-directed to the main menu.");
@@ -108,8 +125,8 @@ public class Main {
 
                     break;
 
-                case 3:
-                    System.out.println("You chose to edit items. Please select from the given options. ");
+                case 3: //edit menu
+                    System.out.println("You chose to edit/remove items. Please select from the given options. ");
 
                     System.out.println("(1) Edit item \n");
                     System.out.println("(2) Remove item \n");
@@ -118,10 +135,14 @@ public class Main {
 
                     switch (editOption) {
                         case 1:
-                            System.out.println("You chose to edit an item.");
+                            System.out.println("You chose to edit an item. Please enter 'E' for expense or 'I' for income.");
+                            String editType = scanner.next();
+
+
                             break;
                         case 2:
-                            System.out.println("You chose to remove an item.");
+                            System.out.println("You chose to remove an item. Please enter 'E' for expense or 'I' for income.");
+                            String removeType = scanner.next();
                             break;
                         default:
                             System.err.println("Please enter a valid option from the menu. You will be re-directed to the main menu.");
@@ -133,7 +154,12 @@ public class Main {
                 case 4:
                     System.out.println("You chose to save and exit. Goodbye.");
                     //userInput -> save items
+                    fileLogger.userInput(transactions);
                     //fileInput -> read to expenses and incomes
+                    FileHandler.fileInput();
+                    //make a file to append with new data everytime
+
+
                     ON = false;
                     break;
                 default:
