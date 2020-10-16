@@ -8,10 +8,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BinaryOperations {
+public class BinaryOperations implements Serializable {
 
 
-    public static void saveBinary(String fileName, Object list) {
+    public void saveBinary(String fileName, Object list) {
         try (ObjectOutputStream oStream = new ObjectOutputStream(new FileOutputStream(fileName))) {
 
             oStream.writeObject(list);
@@ -21,7 +21,7 @@ public class BinaryOperations {
         }
     }
 
-    public static Object readBinary(String fileName){
+    public Object readBinary(String fileName){
         Object transactions = null;
         try (ObjectInputStream iStream = new ObjectInputStream(new FileInputStream(fileName))) {
 
@@ -33,6 +33,8 @@ public class BinaryOperations {
 
         return transactions;
     }
+
+
 
 //
 //    public static void main(String[] args) {

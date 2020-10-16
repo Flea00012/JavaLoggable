@@ -40,9 +40,13 @@ public class DataHandler  {
 //    }
 
 
-
-    public static void Edit(){
-
+    /**
+     *
+     * @param int1
+     * @return
+     */
+    public static int Edit(int int1){
+    return 1;
     }
 
     public static void Remove(){

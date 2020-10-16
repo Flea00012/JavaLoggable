@@ -9,6 +9,7 @@ public class Transactions implements Serializable {
     enum TransactionType{
         INCOME, EXPENSE;
     }
+
     protected  TransactionType itemType;
     private String dateOfTransaction;
     private double monetaryValue;
