@@ -14,17 +14,16 @@
 
 package com.lee;
 
+
 import java.io.*;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Scanner;
+import java.security.spec.ECField;
+import java.util.*;
 
-public class FileHandler extends Logger implements Loggable, java.io.Serializable {
+public class FileHandler implements java.io.Serializable {
 
     public static String str;
 
@@ -61,21 +60,21 @@ public class FileHandler extends Logger implements Loggable, java.io.Serializabl
 
 
 
-    //sends Transactions user input from list objects to the Resources/TransactionsAdditions.txt directory.
-    public void userInput(List<? extends Transactions> list) {
+//    sends Transactions user input from list objects to the Resources/TransactionsAdditions.txt directory.
+    public void userInput(List<Object> list) {
 
         System.err.println("list: " + list + "\n");
         try (PrintWriter fileWriter = new PrintWriter(new BufferedWriter(new FileWriter("Resources/AllTransactions.txt")))) {
 
-            ListIterator<? extends Transactions> itr = list.listIterator();
+            ListIterator<Object> itr = list.listIterator();
 
 
-            int i = 0;
-            while (itr.hasNext() && i < 10) {
+            int i = 1;
+            while (itr.hasNext() && i < 11) {
 
                 System.err.println("scanner-while from userInput is reached for the " + i + "-nth time");
                 String obj = itr.next().toString();
-                fileWriter.write(obj + "\n");
+                fileWriter.write(" " + i + " - " + obj + "\n");
 
                 i++;
             }
@@ -88,15 +87,19 @@ public class FileHandler extends Logger implements Loggable, java.io.Serializabl
 
     } // end FileHandler
 
-    public void constantStorage() {
-        String contentToAppend = "Spain\r\n";
 
-        String fileName = "Resources/constantStorageFile.txt";
-        try {
-            Files.write(
-                    Paths.get(fileName),
-                    contentToAppend.getBytes(),
-                    StandardOpenOption.APPEND);
+    public static void saveToStorage() {
+
+        try (Scanner scanner = new Scanner(new FileReader("Resources/AllTransactions.txt"))) {
+            String fileContent = " ";
+            while (scanner.hasNext()) {
+                fileContent = fileContent.concat(scanner.nextLine() + "\n");
+
+            }
+            FileWriter writer = new FileWriter("Resources/StorageFile.txt");
+            writer.write(fileContent);
+            writer.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,4 +107,11 @@ public class FileHandler extends Logger implements Loggable, java.io.Serializabl
     }
 
 
+
+
 }
+
+
+
+
+
