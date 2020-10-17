@@ -1,5 +1,6 @@
 package com.lee;
 
+
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -7,17 +8,13 @@ import java.util.stream.Collectors;
 
 public class Main extends BinaryOperations {
 
-    public static void main(String[] args) throws InputMismatchException, IOException {
+    public static void main(String[] args)  {
 
-
-
-
+        //the list for reading the Transactions from the user
         List<Transactions> transactions = new ArrayList<>();
+
+        //the object to read and write Transactions to a file named UserData
         BinaryOperations binaryOperations = new BinaryOperations();
-
-
-
-
 
         //switch on the application
         boolean ON = true;
@@ -26,49 +23,24 @@ public class Main extends BinaryOperations {
         int counts = 0;
 
         System.out.println("Welcome to the Banking Application \n");
+        File file = new File("Resources/UserData");
+
+
+
+        //initial file setup in Resources/UserData file to store transactions
+        try {
+
+
+            if(file.exists() && file.canRead() && file.length() != 0 && file.isFile()){
+                transactions = (List<Transactions>) binaryOperations.readBinary("Resources/UserData");
+            }
+
+        } catch (Exception e) {
+            System.out.println("An Exception occurred in the application due to initial file creation. Run the program again.");
+            e.printStackTrace();
+        }
 
         do {
-
-
-            //checks if UserData file exits and creates it if its not present
-//            File file = null;
-//            try {
-//                file = new File("Resources/UserData.BIN");
-//                //Create the file
-//                if (file.createNewFile()) {
-//                    //Read file into list of transactions
-//                    transactions = (List<Transactions>) binaryOperations.readBinary("Resources/UserData");
-//                } else {
-//                    //Read file into list of transactions
-//                    transactions = (List<Transactions>) binaryOperations.readBinary("Resources/UserData");
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
-            transactions = (List<Transactions>) binaryOperations.readBinary("Resources/UserData");
-
-
-
-
-
-
-//            //read the file into list just as the loop starts
-//            try(Scanner scanner = new Scanner(new FileReader("Resources/StorageFile.txt"))){
-//
-//                while(scanner.hasNextLine()){
-//                    fileSaver = fileSaver.concat(scanner.nextLine() + "\n");
-//                }
-//            }catch(IOException e){
-//                e.printStackTrace();
-//            }
-//
-//            String[] str = fileSaver.split(",");
-//            List<String> list = new ArrayList<>();
-//            list = Arrays.asList(str);
-
-
-
 
             System.out.println("Please choose an option below: \n");
             System.out.println("(1) Show items \n");
@@ -97,7 +69,6 @@ public class Main extends BinaryOperations {
                                 System.out.println(t);
                                 System.out.println("\n");
                             }
-
 
                             break;
                         case 2:
@@ -133,32 +104,54 @@ public class Main extends BinaryOperations {
 
                     switch (addOption) {
                         case 1:
-                            System.out.println("You chose to add expense(s). Please insert the date (DD/MM/YYYY), followed by the monetary value below.");
+                            System.out.println("You chose to add expense(s). Please insert the date (DD/MM/YYYY).");
                             String expenseDate = scanner.next();
-                            double expenseMoney = scanner.nextDouble();
                             if (!expenseDate.contains("/")) {
                                 System.err.println("Please enter a valid date in the specified format.");
                                 ON = false;
-                            } else if (expenseMoney <= 0) {
+                            }
+                            System.out.println("Please enter the transaction title eg. jeans.");
+                            String title = scanner.next();
+                            if (title.getClass() != String.class) {
+                                System.out.println("Please enter a valid title for the transaction.");
+                                ON = false;
+                            }
+                            System.out.println("Please enter the monetary value.");
+                            double expenseMoney = scanner.nextDouble();
+                            if (expenseMoney <= 0) {
                                 System.err.println("Please enter a non-zero transaction.");
                                 ON = false;
-                            } else {
-                                transactions.add(new Transactions(false, expenseDate, expenseMoney));
-//                                System.out.println("expenseDate: " + expenseDate + " " + "expenseMoney: " + expenseMoney);
                             }
+                            try {
+                                transactions.add(new Transactions(false, expenseDate, title, expenseMoney));
+                            }catch(NullPointerException e){
+                                transactions.add(new Transactions(false, expenseDate, title, expenseMoney));
+                            }
+
                             break;
                         case 2:
-                            System.out.println("You chose to add income(s). Please insert the date (DD/MM/YYYY), followed by the monetary value below.");
+                            System.out.println("You chose to add income(s). Please insert the date (DD/MM/YYYY).");
                             String incomeDate = scanner.next();
-                            double incomeMoney = scanner.nextDouble();
                             if (!incomeDate.contains("/")) {
                                 System.err.println("Please enter a valid date in the specified format.");
                                 ON = false;
-                            } else if (incomeMoney <= 0) {
+                            }
+                            System.out.println("Please enter the transaction title eg. freelance");
+                            String incomeTitle = scanner.next();
+                            if (incomeTitle.getClass() != String.class) {
+                                System.out.println("Please enter a valid title for the transaction.");
+                                ON = false;
+                            }
+                            System.out.println("Please enter the monetary value.");
+                            double incomeMoney = scanner.nextDouble();
+                            if (incomeMoney <= 0) {
                                 System.err.println("Please enter a non-zero transaction.");
                                 ON = false;
-                            } else {
-                                transactions.add(new Transactions(true, incomeDate, incomeMoney));
+                            }
+                            try {
+                                transactions.add(new Transactions(true, incomeDate, incomeTitle, incomeMoney));
+                            }catch(NullPointerException e){
+                                transactions.add(new Transactions(true, incomeDate, incomeTitle, incomeMoney));
                             }
 
                             break;
@@ -181,6 +174,12 @@ public class Main extends BinaryOperations {
                         case 1:
                             System.out.println("You chose to edit an item. Please enter 'E' for expense or 'I' for income.");
                             String editType = scanner.next();
+//                            for(Transactions t : transactions) {
+//                                if(transactions!=null && "Doe".equals(transactions.getDateOfTransaction())) {
+//                                    transactions.setDateOfTransaction("22/12/2019");
+//                                    break;
+//                                }
+//                            }
 
                             break;
                         case 2:
@@ -213,8 +212,6 @@ public class Main extends BinaryOperations {
 
             //can only run the application for 5 iterations
         } while (ON && counts < 5);
-
-
 
 
     } // end main()

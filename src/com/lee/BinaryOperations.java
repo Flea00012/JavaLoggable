@@ -1,12 +1,9 @@
 package com.lee;
 
 
-
-import org.junit.jupiter.api.Test;
-
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
+
 
 public class BinaryOperations implements Serializable {
 
@@ -16,7 +13,10 @@ public class BinaryOperations implements Serializable {
 
             oStream.writeObject(list);
 
-        } catch (IOException e) {
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+        }catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -25,12 +25,21 @@ public class BinaryOperations implements Serializable {
         Object transactions = null;
         try (ObjectInputStream iStream = new ObjectInputStream(new FileInputStream(fileName))) {
 
-            transactions = iStream.readObject();
+            while(true) {
+                transactions = iStream.readObject();
 
-        } catch (IOException | ClassNotFoundException e) {
+
+            }
+
+
+        } catch (EOFException e) {
+            System.out.println("End of file was reached while reading.");
+            e.getMessage();
+        }catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
+        System.err.println("From binary file: " + transactions);
         return transactions;
     }
 

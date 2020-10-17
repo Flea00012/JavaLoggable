@@ -2,7 +2,8 @@ package com.lee;
 
 import java.io.Serializable;
 
-public class Transactions implements Serializable {
+public class Transactions implements  Serializable, Comparable<Transactions> {
+
 
 
 
@@ -12,9 +13,13 @@ public class Transactions implements Serializable {
 
     protected  TransactionType itemType;
     private String dateOfTransaction;
+    private String title;
     private double monetaryValue;
 
-    public Transactions(boolean income, String dateOfTransaction, double monetaryValue) {
+
+
+
+    public Transactions(boolean income, String dateOfTransaction, String title, double monetaryValue) {
 
         if(income){
             itemType = TransactionType.INCOME;
@@ -22,24 +27,20 @@ public class Transactions implements Serializable {
             itemType = TransactionType.EXPENSE;
         }
         this.dateOfTransaction = dateOfTransaction;
+        this.title = title;
         this.monetaryValue = monetaryValue;
     }
 
     @Override
     public String toString() {
-        return (this.itemType + ", " + this.dateOfTransaction + ", "  + this.monetaryValue) ;
+        return ("{" + this.itemType + ", " + this.dateOfTransaction +", "  + this.title + ", "  + this.monetaryValue + "}") ;
     }
 
+    @Override
+    public int compareTo(Transactions o) {
+        return (int) (this.getMonetaryValue()-o.getMonetaryValue());
+    }
 
-//    @Override
-//    public int compareTo(Transactions transactions) {
-//        if(this.monetaryValue > transactions.getMonetaryValue()) {
-//            return 1;
-//        }else if (this.monetaryValue < transactions.getMonetaryValue()) {
-//            return -1;
-//        }
-//        return 0;
-//    }
 
     public String getDateOfTransaction() {
         return dateOfTransaction;
@@ -51,6 +52,27 @@ public class Transactions implements Serializable {
     }
 
 
+    public String getTitle() {
+        return title;
+    }
+
+
+
+    public void setItemType(TransactionType itemType) {
+        this.itemType = itemType;
+    }
+
+    public void setDateOfTransaction(String dateOfTransaction) {
+        this.dateOfTransaction = dateOfTransaction;
+    }
+
+    public void setMonetaryValue(double monetaryValue) {
+        this.monetaryValue = monetaryValue;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }
 
 
