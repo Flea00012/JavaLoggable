@@ -1,73 +1,46 @@
 package com.lee;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
-public class Main {
+public class Main extends BinaryOperations {
 
-    public static void main(String[] args) throws InputMismatchException {
+    public static void main(String[] args)  {
 
+        //the list for reading the Transactions from the user
+        List<Transactions> transactions = new ArrayList<>();
 
-//        fileLogger.userInput(transactions);
+        //the object to read and write Transactions to a file named UserData
+        BinaryOperations binaryOperations = new BinaryOperations();
 
-
-
-        //read Transaction from Main file to Income and Expenses files
-//        FileHandler.fileInput();
-
-//
-//        DataHandler dataHandler = new DataHandler("INCOME",2000.5);
-////        dataHandler.search(new Transactions(true,"12/12/2020", 1000.5));
-////        dataHandler.search("files");
-////        System.out.println("check = " + check);
-//        dataHandler.readTransactions();
-//
-//            List<String> list = dataHandler.readToList("Resources/AllTransactions.txt");
-//          	Iterator<String> itr = list.iterator();
-//            System.out.println();
-//
-//          	while (itr.hasNext()) {
-//                System.out.println(itr.next());
-//            }
-//
-
-
-
-        //make List of type Transactions and read into appropriate files
-        FileHandler fileLogger = new FileHandler();
-        List<Object> transactions = new ArrayList<>();
-
-
-        String fileSaver = " ";
-
+        //switch on the application
         boolean ON = true;
+
+        //counts the iterations of the application to limit the user to 5 iterations
         int counts = 0;
+
         System.out.println("Welcome to the Banking Application \n");
+        File file = new File("Resources/UserData");
 
-        do {
-            //read the file into list just as the loop starts
-            try(Scanner scanner = new Scanner(new FileReader("Resources/StorageFile.txt"))){
 
-                while(scanner.hasNextLine()){
-                    fileSaver = fileSaver.concat(scanner.nextLine() + "\n");
-                }
-            }catch(IOException e){
-                e.printStackTrace();
+
+        //initial file setup in Resources/UserData file to store transactions
+        try {
+
+
+            if(file.exists() && file.canRead() && file.length() != 0 && file.isFile()){
+                transactions = (List<Transactions>) binaryOperations.readBinary("Resources/UserData");
             }
 
-            String[] str = fileSaver.split(",");
-            List<String> list = new ArrayList<>();
-            list = Arrays.asList(str);
+        } catch (Exception e) {
+            System.out.println("An Exception occurred in the application due to initial file creation. Run the program again.");
+            e.printStackTrace();
+        }
 
-
-
-
-//            transactions = FileHandler.readFile("Resources/SavedItems");
-
-
+        do {
 
             System.out.println("Please choose an option below: \n");
             System.out.println("(1) Show items \n");
@@ -91,23 +64,31 @@ public class Main {
 
                     switch (showOption) {
                         case 1:
-                            System.out.println("You chose to show all items.");
-                            //streams
-
+                            System.out.println("You chose to show all items.\n");
+                            for (Transactions t : transactions) {
+                                System.out.println(t);
+                                System.out.println("\n");
+                            }
 
                             break;
                         case 2:
-                            System.out.println("You chose to show expense(s) only.");
-//                                transactions.stream()
-//                                        .filter(transactions1 -> transactions1.getMonetaryValue().equals(1000.0));
+                            System.out.println("You chose to show expense(s) only.\n");
+                            List<Transactions> trans2 = transactions.stream()
+                                        .filter(transaction -> (transaction.itemType == Transactions.TransactionType.EXPENSE)).collect(Collectors.toList());
+                                        trans2.forEach(System.out::println);
+                                        System.out.println("\n");
 
                             break;
                         case 3:
-                            System.out.println("You chose to show income(s) only.");
+                            System.out.println("You chose to show income(s) only.\n");
+                            List<Transactions> trans3 = transactions.stream()
+                                        .filter(transaction -> (transaction.itemType == Transactions.TransactionType.INCOME)).collect(Collectors.toList());
+                                        trans3.forEach(System.out::println);
+                                        System.out.println("\n");
 
                             break;
                         default:
-                            System.err.println("Please enter a valid option from the menu. You will be re-directed to the main menu.");
+                            System.err.println("Please enter a valid option from the menu. You will be re-directed to the main menu.\n");
                             break;
                     }
 
@@ -123,31 +104,54 @@ public class Main {
 
                     switch (addOption) {
                         case 1:
-                            System.out.println("You chose to add expense(s). Please insert the date (DD/MM/YYYY), followed by the monetary value below.");
+                            System.out.println("You chose to add expense(s). Please insert the date (DD/MM/YYYY).");
                             String expenseDate = scanner.next();
-                            double expenseMoney = scanner.nextDouble();
                             if (!expenseDate.contains("/")) {
                                 System.err.println("Please enter a valid date in the specified format.");
                                 ON = false;
-                            } else if (expenseMoney <= 0) {
+                            }
+                            System.out.println("Please enter the transaction title eg. jeans.");
+                            String title = scanner.next();
+                            if (title.getClass() != String.class) {
+                                System.out.println("Please enter a valid title for the transaction.");
+                                ON = false;
+                            }
+                            System.out.println("Please enter the monetary value.");
+                            double expenseMoney = scanner.nextDouble();
+                            if (expenseMoney <= 0) {
                                 System.err.println("Please enter a non-zero transaction.");
                                 ON = false;
-                            } else {
-                                transactions.add(new Transactions(false, expenseDate, expenseMoney));
                             }
+                            try {
+                                transactions.add(new Transactions(false, expenseDate, title, expenseMoney));
+                            }catch(NullPointerException e){
+                                transactions.add(new Transactions(false, expenseDate, title, expenseMoney));
+                            }
+
                             break;
                         case 2:
-                            System.out.println("You chose to add income(s). Please insert the date (DD/MM/YYYY), followed by the monetary value below.");
+                            System.out.println("You chose to add income(s). Please insert the date (DD/MM/YYYY).");
                             String incomeDate = scanner.next();
-                            double incomeMoney = scanner.nextDouble();
                             if (!incomeDate.contains("/")) {
                                 System.err.println("Please enter a valid date in the specified format.");
                                 ON = false;
-                            } else if (incomeMoney <= 0) {
+                            }
+                            System.out.println("Please enter the transaction title eg. freelance");
+                            String incomeTitle = scanner.next();
+                            if (incomeTitle.getClass() != String.class) {
+                                System.out.println("Please enter a valid title for the transaction.");
+                                ON = false;
+                            }
+                            System.out.println("Please enter the monetary value.");
+                            double incomeMoney = scanner.nextDouble();
+                            if (incomeMoney <= 0) {
                                 System.err.println("Please enter a non-zero transaction.");
                                 ON = false;
-                            } else {
-                                transactions.add(new Transactions(true, incomeDate, incomeMoney));
+                            }
+                            try {
+                                transactions.add(new Transactions(true, incomeDate, incomeTitle, incomeMoney));
+                            }catch(NullPointerException e){
+                                transactions.add(new Transactions(true, incomeDate, incomeTitle, incomeMoney));
                             }
 
                             break;
@@ -170,7 +174,12 @@ public class Main {
                         case 1:
                             System.out.println("You chose to edit an item. Please enter 'E' for expense or 'I' for income.");
                             String editType = scanner.next();
-
+//                            for(Transactions t : transactions) {
+//                                if(transactions!=null && "Doe".equals(transactions.getDateOfTransaction())) {
+//                                    transactions.setDateOfTransaction("22/12/2019");
+//                                    break;
+//                                }
+//                            }
 
                             break;
                         case 2:
@@ -182,18 +191,18 @@ public class Main {
                             break;
                     }
 
-
                     break;
                 case 4:
-                    System.out.println("You chose to save and exit. Goodbye.");
-                    //userInput -> save items
-                    fileLogger.userInput(transactions);
-                    //fileInput -> read to expenses and incomes
-                    FileHandler.fileInput();
-                    //make a file to append with new data everytime
-                    FileHandler.saveToStorage();
+                    System.out.println("You chose to save and exit. Goodbye. \n");
+                    //save the list of objects to Binary file
+                    binaryOperations.saveBinary("Resources/UserData",transactions);
+//                    // write all the objects to .csv files
+//                    FileHandler fileHandler = new FileHandler();
+//                    fileHandler.userInput(transactions);
+//                    //separate income and expenses in separate files
+//                    FileHandler.fileInput();
 
-
+                    //switch off the application and exit
                     ON = false;
                     break;
                 default:
@@ -201,10 +210,8 @@ public class Main {
 
             }
 
-
+            //can only run the application for 5 iterations
         } while (ON && counts < 5);
-
-
 
 
     } // end main()

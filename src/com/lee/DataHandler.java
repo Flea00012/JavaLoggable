@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 
-public class DataHandler implements Comparable<Transactions> {
+public class DataHandler  {
 
 
     private String newItem;
@@ -26,23 +26,27 @@ public class DataHandler implements Comparable<Transactions> {
 
 
 
+//
+//    @Override
+//    public int compareTo(Transactions transactions) {
+//
+//        if(newValue == transactions.getMonetaryValue()) {
+//            return 0;
+//        }else if(newValue > transactions.getMonetaryValue()){
+//            return 1;
+//        }else{
+//            return -1;
+//        }
+//    }
 
-    @Override
-    public int compareTo(Transactions transactions) {
 
-        if(newValue == transactions.getMonetaryValue()) {
-            return 0;
-        }else if(newValue > transactions.getMonetaryValue()){
-            return 1;
-        }else{
-            return -1;
-        }
-    }
-
-
-
-    public static void Edit(){
-
+    /**
+     *
+     * @param int1
+     * @return
+     */
+    public static int Edit(int int1){
+    return 1;
     }
 
     public static void Remove(){
