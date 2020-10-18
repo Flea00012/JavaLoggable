@@ -45,6 +45,10 @@ The user may also edit and remove transactions when required. The user should sp
 
 The user may furthermore select to terminate and exit the application. The selection to end the session will result in the saving of the session information, such as added and removed transactions. Restarting the application will see the user resume at the point where the previous session ended.
 
+## Use Case Diagram
+
+![alt text](https://github.com/Flea00012/JavaLoggable/blob/master/Diagrams/BankApp%20(1).pdf)
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
