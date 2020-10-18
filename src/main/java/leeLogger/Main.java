@@ -1,0 +1,424 @@
+package main.java.leeLogger;
+
+
+import main.java.leeLogger.*;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+
+/**
+ * Class runs User Interface inside console
+ *
+ * The Main class takes in the transactions
+ *  from the user via the console. The transactions are stored in
+ *  a list of type List<Transactions> The data in the list can be removed,
+ *  edited, and viewed as per user specifications. The data can
+ *  also be stored in a binary file if the user chooses this option.
+ *
+ * @author leefowler
+ */
+public class Main {
+
+    //the list for reading the Transactions from the user
+    private static List<Transactions> transactions = new ArrayList<>();
+
+    //the object to read and write Transactions to a file named UserData
+    private static BinaryOperations binaryOperations = new BinaryOperations();
+
+    //switch on the application
+    private static boolean ON = true;
+
+
+    /**
+     * Method runs the application
+     * at least once using a do-while loop
+     * @param args
+     */
+    public static void main(String[] args)  {
+
+
+        transactions = (List<Transactions>) binaryOperations.readBinary();
+
+        if (transactions == null) {
+            transactions = new ArrayList<>();
+        }
+
+        //counts the iterations of the application to limit the user to 5 iterations
+        int counts = 0;
+        System.out.println("Welcome to the Banking Application \n");
+
+        do {
+            welcomePanel();
+
+            //can only run the application for 5 iterations
+        } while (ON && counts < 5);
+
+
+    } // end main()
+
+    /**
+     * Method displays a welcome panel for the user
+     * to decide on options of (1) show items,
+     * (2) add items, (3) edit items, (4)
+     * save and exit application.
+     *
+     * @throws InputMismatchException
+     */
+    private static void welcomePanel(){
+        //welcome menu
+
+        System.out.println("Please choose an option below: \n");
+
+        System.out.println("(1) Show items \n");
+        System.out.println("(2) Add items \n");
+        System.out.println("(3) Edit items \n");
+        System.out.println("(4) Save and Exit. \n");
+
+
+        Scanner scanner = new Scanner((System.in));
+        int showOption = scanner.nextInt();
+
+    try{
+        switch(showOption) {
+            case 1:
+                showItemMenu();
+                break;
+            case 2:
+                addItemMenu();
+                break;
+            case 3:
+                editItemMenu();
+                break;
+            case 4:
+                saveItemMenu();
+                ON = false;
+                break;
+            default:
+                System.out.println("You entered invalid input, please try again.");
+
+        }
+    }catch (InputMismatchException e){
+        System.out.println("You entered invalid input, please try again.");
+        welcomePanel();
+    }
+
+    }//end welcomePanel()
+
+    /**
+     * Method displays menu to show items for the user
+     * to decide on options of (1) show all items,
+     * (2) Show expenses only, (3) Show income only,
+     *
+     * @throws InputMismatchException
+     */
+    private static void showItemMenu(){
+
+        System.out.println("You chose to show the stored items. Please select from the given options. ");
+        System.out.println("(1) Show all items \n");
+        System.out.println("(2) Show expense(s) items \n");
+        System.out.println("(3) Show income(s) items \n");
+
+        Scanner scanner = new Scanner((System.in));
+        int showOption = scanner.nextInt();
+
+
+    try{
+
+        switch (showOption) {
+            case 1:
+                System.out.println("You chose to show all items.\n");
+                for (Transactions t : transactions) {
+                    System.out.println(t);
+
+                }
+                System.out.println("\n Please choose (1) descending  or (2) ascending to order the display data based on cost.");
+                int order = scanner.nextInt();
+
+                if(order == 1){
+                    Collections.sort(transactions, new DisplayAllTransactionsDescendCost());
+                    for(int i=0; i<transactions.size(); i++)
+                        System.out.println(transactions.get(i));
+                }
+
+                if(order == 2){
+                    Collections.sort(transactions, new DisplayAllTransactionsAscendCost());
+                    for(int i=0; i<transactions.size(); i++)
+                        System.out.println(i + ": " + transactions.get(i));
+                }
+
+                Collections.sort(transactions, new TransactionSortingDateCost());
+                System.out.println("\nIn addition items are sorted according to month as follows :\n");
+                for (Transactions t : transactions) {
+                    System.out.println(t);
+                }
+
+                break;
+            case 2:
+                System.out.println("You chose to show expense(s) only.\n");
+                List<Transactions> trans2 = transactions.stream()
+                        .filter(transaction -> (transaction.itemType == Transactions.TransactionType.EXPENSE)).collect(Collectors.toList());
+                trans2.forEach(System.out::println);
+                System.out.println("\n");
+
+                break;
+            case 3:
+                System.out.println("You chose to show income(s) only.\n");
+                List<Transactions> trans3 = transactions.stream()
+                        .filter(transaction -> (transaction.itemType == Transactions.TransactionType.INCOME)).collect(Collectors.toList());
+                trans3.forEach(System.out::println);
+                System.out.println("\n");
+
+                break;
+            default:
+                System.err.println("Please enter a valid option from the menu. You will be re-directed to the main menu.\n");
+                welcomePanel();
+                break;
+        }
+    }catch (InputMismatchException e){
+        System.out.println("You entered invalid input, please try again.");
+        welcomePanel();
+    }
+
+
+    } //end showItemMenu()
+
+    /**
+     * Method displays menu to add items for the user
+     * to decide on options of (1) add expenses,
+     * (2) add incomes.
+     *
+     * @throws InputMismatchException
+     */
+    private static void addItemMenu(){
+
+        System.out.println("You chose to add items. Please select from the given options. ");
+
+        System.out.println("(1) Add expense(s) \n");
+        System.out.println("(2) Add income(s) \n");
+
+        Scanner scanner = new Scanner((System.in));
+        int addOption = scanner.nextInt();
+
+    try{
+
+        switch (addOption) {
+            case 1:
+                System.out.println("You chose to add expense(s). Please insert the date in format (MM/DD/YYYY), followed by title (eg. jeans), followed by cost of item.");
+                String expenseDate = scanner.next();
+                String expenseTitle = scanner.next();
+                double expenseMoney = scanner.nextDouble();
+
+                if (!expenseDate.contains("/")) {
+                    System.err.println("Please enter a valid date in the specified format.");
+                    addItemMenu();
+                }
+                if (expenseTitle.getClass() != String.class) {
+                    System.out.println("Please enter a valid title for the transaction eg. jeans.");
+                    addItemMenu();
+                }
+                if (expenseMoney <= 0) {
+                    System.err.println("Please enter a non-zero transaction.");
+                    addItemMenu();
+                }
+                    Transactions trans = new Transactions(false, expenseDate, expenseTitle, expenseMoney);
+                    transactions.add(trans);
+                    System.out.println("transactions:"+ transactions);
+
+
+                break;
+            case 2:
+                System.out.println("You chose to add income(s). Please insert the date in format (MM/DD/YYYY), followed by title (eg. work), followed by cost of item.");
+                String incomeDate = scanner.next();
+                String incomeTitle = scanner.next();
+                double incomeMoney = scanner.nextDouble();
+
+                if (!incomeDate.contains("/")) {
+                    System.err.println("Please enter a valid date in the specified format.");
+                    addItemMenu();
+                }
+                if (incomeTitle.getClass() != String.class) {
+                    System.out.println("Please enter a valid title for the transaction.");
+                   addItemMenu();
+                }
+                if (incomeMoney <= 0) {
+                    System.err.println("Please enter a non-zero transaction.");
+                    addItemMenu();
+                }
+
+                transactions.add(new Transactions(true, incomeDate, incomeTitle, incomeMoney));
+                System.out.println("transactions:" + transactions);
+
+                break;
+            default:
+                System.err.println("Please enter a valid option from the menu. You will be re-directed to the main menu.");
+                welcomePanel();
+                break;
+        }
+
+    }catch (InputMismatchException e){
+        System.out.println("You entered invalid input, please try again.");
+        welcomePanel();
+    }
+
+    }//end addItemMenu()
+
+
+    /**
+     * Method displays menu to edits items for the user
+     * to decide on options of (1) edit item,
+     * (2) remove item.
+     *
+     * @throws InputMismatchException
+     */
+    private static void editItemMenu(){
+
+        System.out.println("You chose to edit/remove items. Please select from the given options. ");
+
+        System.out.println("(1) Edit item \n");
+        System.out.println("(2) Remove item \n");
+
+        Scanner scanner = new Scanner((System.in));
+        int editOption = scanner.nextInt();
+
+        try {
+            switch (editOption) {
+                case 1:
+                    editTransaction();
+                    break;
+                case 2:
+                    removeTransaction();
+                    break;
+            }
+        }catch (InputMismatchException e){
+            System.out.println("You entered invalid input, please try again.");
+            welcomePanel();
+        }
+
+    }//end editItemMenu()
+
+
+    /**
+     * Method edits the list by replacing existing items
+     * with new items of type Transactions
+     */
+   private static void editTransaction(){
+
+   try{
+
+       Scanner scanner = new Scanner (System.in);
+       for (int i=0; i<transactions.size();i++){
+           System.out.println(i + ": " + transactions.get(i));
+       }
+       System.out.println("\nPlease enter index (on the left) of the item you wish to remove (eg. 1)");
+       int index = scanner.nextInt();
+
+
+
+//       int typeItem = scanner.nextInt();
+//       System.out.println("Please enter the date of the existing item in format (MM/DD/YYYY)");
+//       String date = scanner.next();
+//       System.out.println("Please enter the title of the item eg. jeans.");
+//       String title = scanner.next();
+//       System.out.println("Please enter the cost of the item (please observe decimals in cost).");
+//       double cost = scanner.nextDouble();
+//
+//       Collections.sort(transactions, new TransactionSortingDateCost());
+//       if (typeItem == 1) {
+//           index = Collections.binarySearch(transactions, (new Transactions(false, date, title, cost)));
+//           System.out.println(index);
+//       }else {
+//           index = Collections.binarySearch(transactions, (new Transactions(true, date, title, cost)));
+//           System.out.println(index);
+//       }
+       System.out.println("\nPlease select the type of replacement transaction: (1) expense or (2) income.\n");
+       int newItem = scanner.nextInt();
+
+       System.out.println("\nPlease insert the date in format (MM/DD/YYYY), followed by title (eg. work), followed by cost of item.\n");
+       String newDate = scanner.next();
+       String newTitle = scanner.next();
+       double newCost = scanner.nextDouble();
+
+       if (!newDate.contains("/")) {
+           System.out.println("Please enter a valid date in the specified format.");
+           editTransaction();
+       }
+       if (newTitle.getClass() != String.class) {
+           System.out.println("Please enter a valid title for the transaction.");
+           editTransaction();
+       }
+       if (newCost <= 0) {
+           System.out.println("Please enter a non-zero transaction.");
+           editTransaction();
+       }
+
+       if (newItem == 1) {
+           transactions.set(index, new Transactions(false, newDate, newTitle, newCost));
+       }else {
+           transactions.set(index, new Transactions(true, newDate, newTitle, newCost));
+       }
+
+   }catch (InputMismatchException e){
+        System.out.println("You entered invalid input, please try again.");
+        welcomePanel();
+    }
+
+   }//end editTransaction()
+
+
+   private  static void removeTransaction() {
+
+   try{
+       Scanner scanner = new Scanner(System.in);
+       for (int i=0; i<transactions.size();i++){
+           System.out.println(i + ": " + transactions.get(i));
+       }
+
+       System.out.println("\nPlease enter index (on the left) of the item you wish to remove (eg. 1)");
+       int index=scanner.nextInt();
+       transactions.remove(index);
+
+   }catch (InputMismatchException e){
+        System.out.println("You entered invalid input, please try again.");
+        welcomePanel();
+    }
+
+   }//end removeTransaction()
+
+    /**
+     * Method displays menu to save and exit
+     * from the application.
+     */
+    public static void saveItemMenu(){
+        System.out.println("You chose to save and exit. Goodbye. \n");
+
+        //save the list of objects to Binary file
+        Object obj = (Object) transactions;
+        binaryOperations.saveBinary(obj);
+
+        //switch off the application and exit
+        ON = false;
+
+//                    // write all the objects to .csv files
+//                    FileHandler fileHandler = new FileHandler();
+//                    fileHandler.userInput(transactions);
+//                    //separate income and expenses in separate files
+//                    FileHandler.fileInput();
+
+    }//end saveItemMenu()
+
+
+} // end class Main
+
+
+
+
+
+
+
+
+
+
+
+
+
