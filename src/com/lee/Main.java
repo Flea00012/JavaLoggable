@@ -100,7 +100,6 @@ public class Main {
 
     }
 
-
     /**
      * Method displays menu to show items for the user
      * to decide on options of (1) show all items,
@@ -196,8 +195,6 @@ public class Main {
         Scanner scanner = new Scanner((System.in));
         int addOption = scanner.nextInt();
 
-
-
         switch (addOption) {
             case 1:
                 System.out.println("You chose to add expense(s). Please insert the date (MM/DD/YYYY), followed by title, followed by cost of item.");
@@ -288,23 +285,10 @@ public class Main {
         try {
             switch (editOption) {
                 case 1:
-                    System.out.println("You chose to edit an item. Please enter 'E' for expense or 'I' for income.");
-                    String editType = scanner.next();
-//                            for(Transactions t : transactions) {
-//                                if(transactions!=null && "Doe".equals(transactions.getDateOfTransaction())) {
-//                                    transactions.setDateOfTransaction("22/12/2019");
-//                                    break;
-//                                }
-//                            }
-
+                    editTransaction();
                     break;
                 case 2:
-                    System.out.println("You chose to remove an item. Please enter 'E' for expense or 'I' for income.");
-                    String removeType = scanner.next();
-                    break;
-                default:
-                    System.err.println("Please enter a valid option from the menu. You will be re-directed to the main menu.");
-                    welcomePanel();
+                    removeTransaction();
                     break;
             }
         }catch (InputMismatchException e){
@@ -313,6 +297,78 @@ public class Main {
         }
 
     }
+
+
+    /**
+     * Method edits the list by replacing existing items
+     * with new items of type Transactions
+     */
+   private static void editTransaction(){
+
+       Scanner scanner = new Scanner (System.in);
+       for (Transactions t : transactions) {
+           System.out.println(t);
+       }
+       System.out.println("\nYou chose to edit an item. \nPlease enter the type (1) EXPENSE or (2) INCOME.");
+       int typeItem = scanner.nextInt();
+       System.out.println("Please enter the date of the existing item in format (MM/DD/YYYY");
+       String date = scanner.next();
+       System.out.println("Please enter the title of the item eg. jeans.");
+       String title = scanner.next();
+       System.out.println("Please enter the cost of the item (please observe decimals in cost).");
+       double cost = scanner.nextDouble();
+       int index;
+       Collections.sort(transactions, new TransactionSortingDateCost());
+       if (typeItem == 1) {
+           index = Collections.binarySearch(transactions, (new Transactions(false, date, title, cost)));
+           System.out.println(index);
+       }else {
+           index = Collections.binarySearch(transactions, (new Transactions(true, date, title, cost)));
+           System.out.println(index);
+       }
+
+       System.out.println("\nChoose the type of the new transaction, (1) EXPENSE and (2) INCOME.");
+       int newItem = scanner.nextInt();
+       System.out.println("Please enter the date of the new item in format (MM/DD/YYYY");
+       String newDate = scanner.next();
+       System.out.println("Please enter the title of the new item eg. jeans.");
+       String newTitle = scanner.next();
+       System.out.println("Please enter the cost of the new item (please observe decimals in cost).");
+       double newCost = scanner.nextDouble();
+
+       if (newItem == 1) {
+           transactions.add(index, new Transactions(false, newDate, newTitle, newCost));
+       }else {
+           transactions.add(index, new Transactions(true, newDate, newTitle, newCost));
+       }
+
+   }
+
+
+   private  static void removeTransaction() {
+       Scanner scanner = new Scanner(System.in);
+       for (Transactions t : transactions) {
+           System.out.println(t);
+       }
+       System.out.println("\nYou chose to remove an item. \nPlease enter the type (1) EXPENSE or (2) INCOME.");
+       int removeType = scanner.nextInt();
+       System.out.println("Please enter the date of the existing item in format (MM/DD/YYYY");
+       String removeDate = scanner.next();
+       System.out.println("Please enter the title of the item eg. jeans.");
+       String removeTitle = scanner.next();
+       System.out.println("Please enter the cost of the item (please observe decimals in cost).");
+       double removeCost = scanner.nextDouble();
+       int index;
+       Collections.sort(transactions, new TransactionSortingDateCost());
+       if (removeType == 1) {
+           index = Collections.binarySearch(transactions, (new Transactions(false, removeDate, removeTitle, removeCost)));
+           transactions.remove(index);
+       } else {
+           index = Collections.binarySearch(transactions, (new Transactions(true, removeDate, removeTitle, removeCost)));
+           transactions.remove(index);
+       }
+
+   }
 
     /**
      * Method displays menu to save and exit
@@ -328,22 +384,13 @@ public class Main {
         //switch off the application and exit
         ON = false;
 
-
 //                    // write all the objects to .csv files
 //                    FileHandler fileHandler = new FileHandler();
 //                    fileHandler.userInput(transactions);
 //                    //separate income and expenses in separate files
 //                    FileHandler.fileInput();
 
-
-
-
-
     }
-
-
-
-
 
 
 } // end class Main

@@ -44,7 +44,11 @@ public class BinaryOperations implements Serializable {
     }
 
 
-
+    /**
+     * Method saves transactions to a binary file from a list
+     * of type Object for use in data operations and storage of
+     * data
+     */
     public static void saveBinary(Object transactionList){
         try{
             FileOutputStream foStream = new FileOutputStream("Resources/UserData");
