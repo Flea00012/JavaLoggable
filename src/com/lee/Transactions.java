@@ -1,12 +1,27 @@
 package com.lee;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
+
+
+/**
+ * Class is used to produce objects of type transaction.
+ *
+ * Class implements Serializable and is used to create objects of transactions
+ * for the Banking application. These objects are used to recorde transactions by the user.
+ *
+ *
+ * @author leefowler
+ */
 public class Transactions implements  Serializable, Comparable<Transactions> {
 
 
-
-
+    /**
+     * Class TransactionType has two possible variables
+     * of INCOME and EXPENSE, which is used to limit the type of
+     * transaction types in the application.
+     */
     enum TransactionType{
         INCOME, EXPENSE;
     }
@@ -17,8 +32,15 @@ public class Transactions implements  Serializable, Comparable<Transactions> {
     private double monetaryValue;
 
 
-
-
+    /**
+     * Constructor makes the object of type Transaction with parameters that define the
+     * transactions. The income field is boolean to allow true (income) and false (expense).
+     *
+     * @param income
+     * @param dateOfTransaction
+     * @param title
+     * @param monetaryValue
+     */
     public Transactions(boolean income, String dateOfTransaction, String title, double monetaryValue) {
 
         if(income){
@@ -41,7 +63,10 @@ public class Transactions implements  Serializable, Comparable<Transactions> {
         return (int) (this.getMonetaryValue()-o.getMonetaryValue());
     }
 
-
+    /**
+     * Getters and Setters for the field variables
+     *
+     */
     public String getDateOfTransaction() {
         return dateOfTransaction;
     }
@@ -74,5 +99,7 @@ public class Transactions implements  Serializable, Comparable<Transactions> {
         this.title = title;
     }
 }
+
+
 
 
