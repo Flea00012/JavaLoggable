@@ -47,7 +47,7 @@ The user may furthermore select to terminate and exit the application. The selec
 
 ## Use Case Diagram
 
-![alt text](https://github.com/Flea00012/JavaLoggable/blob/master/Diagrams/BankApp%20(1).pdf)
+![alt text](https://github.com/Flea00012/JavaLoggable/blob/master/Diagrams/Class%20Diagram%20-%20IP%20-%20Lee.png)
 
 ## Contributing
 
