@@ -33,7 +33,27 @@ Please choose an option below:
 
 ```
 
-The user can select one of these numbers and navigate to the desired options to achieve the tasks allowed. The user is requested to enter transactions in a required format such as "DD/MM/YY" for the date of transaction, and the transaction cost cannot be zero. Failure to specify this correctly will terminate the session.
+The user can select one of these numbers and navigate to the desired options to achieve the tasks allowed. The user is requested to enter transactions in a required format such as "MM/DD/YY" for the date of transaction, and the transaction cost cannot be zero. Failure to specify dates in the correct format, or numbers instead of words for the title of the Transaction, will require the user to re-enter the correct information until it is correct in format. A brief description of the program will now be given to demonstrate the operation.
+
+Should the user choose to add items (the first step in the use of the application), the user will have to select the number ```bash 2 ``` from the console menu. The console will then require the user to select the type of transaction to enter.
+
+```bash
+You chose to add items. Please select from the given options. 
+
+(1) Add expense(s)
+(2) Add income(s)
+
+```
+Should the user choose to enter an expense, the user will have to press ```bash 1 ```.
+
+The user will then be requested to enter further data as follows:
+
+```bash
+
+You chose to add expense(s). Please insert the date in format (MM/DD/YYYY), followed by title (eg. jeans), followed by cost of item.
+
+```
+Assuming the user enters the transaction in the correct format, the item will be added to the list of transactions. Should the user desire to edit the information, this can be done on the main welcome menu. Should the user desire to save the information and exit, this can also be selected on the main welcome menu.
 
 ## Features
 
