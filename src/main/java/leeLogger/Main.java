@@ -1,7 +1,7 @@
-package main.java.leeLogger;
+package leeLogger;
 
 
-import main.java.leeLogger.*;
+//import main.java.leeLogger.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -10,11 +10,12 @@ import java.util.stream.Collectors;
 /**
  * Class runs User Interface inside console
  *
- * The Main class takes in the transactions
+ * The {@code Main} class takes in the transactions
  *  from the user via the console. The transactions are stored in
- *  a list of type List<Transactions> The data in the list can be removed,
+ *  a list of type {@code List<Transactions>} The data in the list can be removed,
  *  edited, and viewed as per user specifications. The data can
- *  also be stored in a binary file if the user chooses this option.
+ *  also be stored in a binary file if the user chooses this option. Finally,
+ *  the object data is also read to <b>.csv format</b>
  *
  * @author leefowler
  */
@@ -63,7 +64,8 @@ public class Main {
      * (2) add items, (3) edit items, (4)
      * save and exit application.
      *
-     * @throws InputMismatchException
+     * @throws InputMismatchException   catches the incorrect input from the user
+     *                                  and ensures the program returns to main menu
      */
     private static void welcomePanel(){
         //welcome menu
@@ -136,36 +138,69 @@ public class Main {
                 int order = scanner.nextInt();
 
                 if(order == 1){
+                    System.out.println("--- List of Transactions in descending order based on cost ---");
                     Collections.sort(transactions, new DisplayAllTransactionsDescendCost());
                     for(int i=0; i<transactions.size(); i++)
                         System.out.println(transactions.get(i));
                 }
 
                 if(order == 2){
-                    Collections.sort(transactions, new DisplayAllTransactionsAscendCost());
+                    System.out.println("--- List of Transactions in ascending order based on cost ---");
+                    Collections.sort(transactions, new  DisplayAllTransactionsAscendCost());
                     for(int i=0; i<transactions.size(); i++)
                         System.out.println(i + ": " + transactions.get(i));
                 }
 
-                Collections.sort(transactions, new TransactionSortingDateCost());
+                Collections.sort(transactions, new  TransactionSortingDateCost());
                 System.out.println("\nIn addition items are sorted according to month as follows :\n");
-                for (Transactions t : transactions) {
+                for ( Transactions t : transactions) {
                     System.out.println(t);
                 }
+
+//                -- sort by getDate ---
+//                List<Transactions> sortedList = transactions.stream()
+//                        .sorted(Comparator.comparingInt(Transactions::getDateOfTransaction))
+//                        .collect(Collectors.toList());
+//                        sortedList.forEach(System.out::println);
+
+//                -- sort by reversed getAge ---
+//                List<Transactions> sortedList = users.stream()
+//                        .sorted(Comparator.comparingInt(User::getAge)
+//                                .reversed())
+//                        .collect(Collectors.toList());
+//                sortedList.forEach(System.out::println);
+
+
+//                -- sort by name --
+//                List<Transactions> sortedList = users.stream()
+//                        .sorted(Comparator.comparingInt(User::getAge)
+//                                .reversed())
+//                        .collect(Collectors.toList());
+//                sortedList.forEach(System.out::println);
+
+
+//                List<Transactions> sortedList = transactions.stream().sorted().collect(Collectors.toList());
+//                sortedList.forEach(System.out::println);
+
+//                Collections.sort(transactions, new TransactionSortingDateCost());
+//                System.out.println("\nAnd finally items are sorted according to title as follows :\n");
+//                for (Transactions t : transactions) {
+//                    System.out.println(t);
+//                }
 
                 break;
             case 2:
                 System.out.println("You chose to show expense(s) only.\n");
-                List<Transactions> trans2 = transactions.stream()
-                        .filter(transaction -> (transaction.itemType == Transactions.TransactionType.EXPENSE)).collect(Collectors.toList());
+                List< Transactions> trans2 = transactions.stream()
+                        .filter(transaction -> (transaction.itemType ==  Transactions.TransactionType.EXPENSE)).collect(Collectors.toList());
                 trans2.forEach(System.out::println);
                 System.out.println("\n");
 
                 break;
             case 3:
                 System.out.println("You chose to show income(s) only.\n");
-                List<Transactions> trans3 = transactions.stream()
-                        .filter(transaction -> (transaction.itemType == Transactions.TransactionType.INCOME)).collect(Collectors.toList());
+                List< Transactions> trans3 = transactions.stream()
+                        .filter(transaction -> (transaction.itemType ==  Transactions.TransactionType.INCOME)).collect(Collectors.toList());
                 trans3.forEach(System.out::println);
                 System.out.println("\n");
 
@@ -221,7 +256,7 @@ public class Main {
                     System.err.println("Please enter a non-zero transaction.");
                     addItemMenu();
                 }
-                    Transactions trans = new Transactions(false, expenseDate, expenseTitle, expenseMoney);
+                     Transactions trans = new  Transactions(false, expenseDate, expenseTitle, expenseMoney);
                     transactions.add(trans);
                     System.out.println("transactions:"+ transactions);
 
@@ -246,7 +281,7 @@ public class Main {
                     addItemMenu();
                 }
 
-                transactions.add(new Transactions(true, incomeDate, incomeTitle, incomeMoney));
+                transactions.add(new  Transactions(true, incomeDate, incomeTitle, incomeMoney));
                 System.out.println("transactions:" + transactions);
 
                 break;
@@ -313,24 +348,6 @@ public class Main {
        System.out.println("\nPlease enter index (on the left) of the item you wish to remove (eg. 1)");
        int index = scanner.nextInt();
 
-
-
-//       int typeItem = scanner.nextInt();
-//       System.out.println("Please enter the date of the existing item in format (MM/DD/YYYY)");
-//       String date = scanner.next();
-//       System.out.println("Please enter the title of the item eg. jeans.");
-//       String title = scanner.next();
-//       System.out.println("Please enter the cost of the item (please observe decimals in cost).");
-//       double cost = scanner.nextDouble();
-//
-//       Collections.sort(transactions, new TransactionSortingDateCost());
-//       if (typeItem == 1) {
-//           index = Collections.binarySearch(transactions, (new Transactions(false, date, title, cost)));
-//           System.out.println(index);
-//       }else {
-//           index = Collections.binarySearch(transactions, (new Transactions(true, date, title, cost)));
-//           System.out.println(index);
-//       }
        System.out.println("\nPlease select the type of replacement transaction: (1) expense or (2) income.\n");
        int newItem = scanner.nextInt();
 
@@ -353,9 +370,9 @@ public class Main {
        }
 
        if (newItem == 1) {
-           transactions.set(index, new Transactions(false, newDate, newTitle, newCost));
+           transactions.set(index, new  Transactions(false, newDate, newTitle, newCost));
        }else {
-           transactions.set(index, new Transactions(true, newDate, newTitle, newCost));
+           transactions.set(index, new  Transactions(true, newDate, newTitle, newCost));
        }
 
    }catch (InputMismatchException e){
@@ -399,11 +416,12 @@ public class Main {
         //switch off the application and exit
         ON = false;
 
-//                    // write all the objects to .csv files
-//                    FileHandler fileHandler = new FileHandler();
-//                    fileHandler.userInput(transactions);
-//                    //separate income and expenses in separate files
-//                    FileHandler.fileInput();
+        // write all the objects to .csv files
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.userInput(transactions);
+
+        //separate income and expenses in separate files
+         FileHandler.fileInput();
 
     }//end saveItemMenu()
 

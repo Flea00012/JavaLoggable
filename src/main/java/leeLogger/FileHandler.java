@@ -12,7 +12,7 @@
  * @author Lee Fowler
  */
 
-package main.java.leeLogger;
+package leeLogger;
 
 
 import java.io.*;
@@ -20,12 +20,27 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Scanner;
 
+/**
+ *  Class saves Object data in .CSV format and reads this data from a .CSV file
+ *  *
+ *  * The {@code FileHandler} class takes in the transactions
+ *  * as a list object of type Transactions and saves the data to directory
+ *  * <b>"Resources/AllTransactions.csv"</b>. The same file is updated in storage
+ *  * when the user re-starts the application and saves the project before exiting.
+ *  *
+ *  * @author leefowler
+ */
 public class FileHandler implements Serializable {
 
+    /**
+     * the String for reading the Transactions from one file to another
+     */
     public static String str;
 
 
-    //separates Transactions from files into separate files for income and expenses.
+    /**
+     * The {@code fileInput} method separates all the Transactions from the main file into separate files for income and expenses.
+     */
     public static void fileInput() {
 
         try (Scanner scanner = new Scanner(new BufferedReader(new FileReader("Resources/AllTransactions.csv")));
@@ -55,8 +70,10 @@ public class FileHandler implements Serializable {
     } //end fileInput
 
 
-
-//    sends Transactions user input from list objects to the Resources/TransactionsAdditions.txt directory.
+    /**
+     * The {@code userInput} method takes in user input from a list of objects of type Transactions.
+     * These objects are saved in to the Resources/AllTransactions.csv directory.
+     */
     public void userInput(List<Transactions> list) {
 
 
@@ -82,26 +99,6 @@ public class FileHandler implements Serializable {
 
 
     } // end FileHandler
-
-
-    public static void saveToStorage() {
-
-        try (Scanner scanner = new Scanner(new FileReader("Resources/AllTransactions.csv"))) {
-            String fileContent = " ";
-            while (scanner.hasNext()) {
-                fileContent = fileContent.concat(scanner.nextLine() + "\n");
-
-            }
-            FileWriter writer = new FileWriter("Resources/StorageFile.csv");
-            writer.write(fileContent);
-            writer.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
 
 
 

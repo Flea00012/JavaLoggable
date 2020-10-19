@@ -1,4 +1,4 @@
-package main.java.leeLogger;
+package leeLogger;
 
 import java.io.Serializable;
 
@@ -24,9 +24,23 @@ public class Transactions implements  Serializable, Comparable<Transactions> {
         INCOME, EXPENSE;
     }
 
-    protected  TransactionType itemType;
+    /**
+     * The transaction type with possible values
+     * INCOME and EXPENSE.
+     */
+    protected TransactionType itemType;
+    /**
+     * The String to show date of the transaction.
+     */
     private String dateOfTransaction;
+    /**
+     * The String of the title of the transaction.
+     */
     private String title;
+
+    /**
+     * The double to store the cost of the transaction.
+     */
     private double monetaryValue;
 
 
@@ -66,17 +80,17 @@ public class Transactions implements  Serializable, Comparable<Transactions> {
      *
      */
     public String getDateOfTransaction() {
-        return dateOfTransaction;
+        return this.dateOfTransaction;
     }
 
 
     public double getMonetaryValue() {
-        return monetaryValue;
+        return this.monetaryValue;
     }
 
 
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
 

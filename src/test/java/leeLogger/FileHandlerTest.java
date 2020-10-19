@@ -1,13 +1,11 @@
-package test.java.leeLogger;
+package leeLogger;
 
-import main.java.leeLogger.FileHandler;
+//import  FileHandler;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FileHandlerTest {
 
-    @Test
-    void fileInput() {
-        FileHandler file = new FileHandler();
 
-    }
 }

@@ -1,6 +1,6 @@
-package test.java.leeLogger;
+package leeLogger;
 
-import main.java.leeLogger.Main;
+//import  Main;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
