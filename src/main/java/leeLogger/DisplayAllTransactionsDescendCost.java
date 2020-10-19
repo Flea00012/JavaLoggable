@@ -1,4 +1,6 @@
-package main.java.leeLogger;
+package leeLogger;
+
+import leeLogger.Transactions;
 
 import java.util.Comparator;
 
@@ -6,7 +8,7 @@ import java.util.Comparator;
  * Class is used to display all transactions
  * in descending order of cost.
  *
- * Class implements Comparator to override the compare method and
+ * Class {@code DisplayAllTransactionsDescendCost} implements Comparator to override the compare method and
  * sort the transactions in descending order of cost
  *
  * @author leefowler

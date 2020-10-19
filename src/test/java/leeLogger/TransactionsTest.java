@@ -1,23 +1,33 @@
-package test.java.leeLogger;
+package leeLogger;
 
-import main.java.leeLogger.Transactions;
+//import  Transactions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TransactionsTest {
 
-
+    Transactions test = null;
+    @BeforeEach
+    void makeTranscationObject() {
+        test = new Transactions(true, "22/12/2020","shirt", 1000.0);
+    }
     @Test
-    void getDateOfTransaction() {
-        Transactions test = new Transactions(true, "22/12/2020","jeans", 1000.0);
+    void transactionsGetDateOfTransaction() {
         assertEquals("22/12/2020", test.getDateOfTransaction());
     }
-
     @Test
-    void getMonetaryValue() {
-        Transactions test = new Transactions(true, "22/12/2020","shirt", 1000.0);
+    void transactionsGetMonetaryValue() {
         assertEquals(1000.0, test.getMonetaryValue());
-
     }
+    @Test
+    void transactionsGetTitle() {
+        assertEquals("shirt", test.getTitle());
+    }
+
+
 }

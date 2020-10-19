@@ -1,5 +1,8 @@
 
-package main.java.leeLogger;
+package leeLogger;
+
+import leeLogger.BinaryOperations;
+import leeLogger.Transactions;
 
 import java.util.ArrayList;
 import java.util.List;
