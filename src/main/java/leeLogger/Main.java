@@ -21,13 +21,19 @@ import java.util.stream.Collectors;
  */
 public class Main {
 
-    //the list for reading the Transactions from the user
+    /**
+     * the list for reading the Transactions from the user
+     */
     private static List<Transactions> transactions = new ArrayList<>();
 
-    //the object to read and write Transactions to a file named UserData
+    /**
+     * the object to read and write Transactions to a file named UserData
+     */
     private static BinaryOperations binaryOperations = new BinaryOperations();
 
-    //switch on the application
+    /**
+     * switch on the application
+     */
     private static boolean ON = true;
 
 
@@ -113,7 +119,7 @@ public class Main {
      * to decide on options of (1) show all items,
      * (2) Show expenses only, (3) Show income only,
      *
-     * @throws InputMismatchException
+     * @throws InputMismatchException An incorrect input from the user will result in an exception and use will be redirected to the menu
      */
     private static void showItemMenu(){
 
@@ -220,7 +226,7 @@ public class Main {
      * to decide on options of (1) add expenses,
      * (2) add incomes.
      *
-     * @throws InputMismatchException
+     * @throws InputMismatchException An incorrect input from the user will result in an exception and use will be redirected to the menu
      */
     private static void addItemMenu(){
 
@@ -301,7 +307,7 @@ public class Main {
      * to decide on options of (1) edit item,
      * (2) remove item.
      *
-     * @throws InputMismatchException
+     * @throws InputMismatchException An incorrect input from the user will result in an exception and use will be redirected to the menu
      */
     private static void editItemMenu(){
 
@@ -331,8 +337,12 @@ public class Main {
 
 
     /**
-     * Method edits the list by replacing existing items
-     * with new items of type Transactions
+     * Method displays menu to edit items for the user
+     * to decide on options of for editing a specific item. The
+     * user is instructed to enter a specific value and failure to do
+     * so will result in a {@code InputMismatchException} being thrown
+     *
+     * @throws InputMismatchException An incorrect input from the user will result in an exception and use will be redirected to the menu
      */
    private static void editTransaction(){
 
@@ -380,6 +390,15 @@ public class Main {
    }//end editTransaction()
 
 
+
+    /**
+     * Method displays menu to edit items for the user
+     * to decide on options of for editing a specific item. The
+     * user is instructed to enter a specific value and failure to do
+     * so will result in a {@code InputMismatchException} being thrown
+     *
+     * @throws InputMismatchException An incorrect input from the user will result in an exception and use will be redirected to the menu
+     */
    private  static void removeTransaction() {
 
    try{
