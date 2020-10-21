@@ -44,7 +44,7 @@ You chose to add items. Please select from the given options.
 (2) Add income(s)
 
 ```
-Should the user choose to enter an expense, the user will have to press ```bash 1 ```.
+Should the user choose to enter an expense, the user will have to press ``` 1 ```.
 
 The user will then be requested to enter further data as follows:
 
@@ -75,7 +75,9 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## License
 
-![alt text](https://github.com/Flea00012/JavaLoggable/blob/master/LICENSE)
+MIT license applied to this project. Please view the link for further details.
+
+![alt text] (https://github.com/Flea00012/JavaLoggable/blob/master/LICENSE)
 
 ## Disclaimer
 
