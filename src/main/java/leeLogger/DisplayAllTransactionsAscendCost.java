@@ -21,7 +21,7 @@ public class DisplayAllTransactionsAscendCost implements Comparator<leeLogger.Tr
      * @return int
      */
     @Override
-    public int compare(leeLogger.Transactions o1, leeLogger.Transactions o2) {
+    public int compare(Transactions o1, Transactions o2) {
         return (int) (o1.getMonetaryValue() - o2.getMonetaryValue());
     }
 }
