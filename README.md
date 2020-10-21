@@ -35,7 +35,7 @@ Please choose an option below:
 
 The user can select one of these numbers and navigate to the desired options to achieve the tasks allowed. The user is requested to enter transactions in a required format such as "MM/DD/YY" for the date of transaction, and the transaction cost cannot be zero. Failure to specify dates in the correct format, or numbers instead of words for the title of the Transaction, will require the user to re-enter the correct information until it is correct in format. A brief description of the program will now be given to demonstrate the operation.
 
-Should the user choose to add items (the first step in the use of the application), the user will have to select the number ```bash 2 ``` from the console menu. The console will then require the user to select the type of transaction to enter.
+Should the user choose to add items (the first step in the use of the application), the user will have to select the number ``` 2 ``` from the console menu. The console will then require the user to select the type of transaction to enter.
 
 ```bash
 You chose to add items. Please select from the given options. 
@@ -77,7 +77,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 MIT license applied to this project. Please view the link for further details.
 
-![alt text] (https://github.com/Flea00012/JavaLoggable/blob/master/LICENSE)
+![alt text](https://github.com/Flea00012/JavaLoggable/blob/master/LICENSE)
 
 ## Disclaimer
 
