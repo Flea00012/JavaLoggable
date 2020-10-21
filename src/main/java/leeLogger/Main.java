@@ -39,11 +39,12 @@ public class Main {
     public static void main(String[] args)  {
 
 
-        transactions = (List<Transactions>) binaryOperations.readBinary();
+        transactions = (List<Transactions>) binaryOperations.readBinary("Resources/UserData");
 
         if (transactions == null) {
             transactions = new ArrayList<>();
         }
+
 
         //counts the iterations of the application to limit the user to 5 iterations
         int counts = 0;
@@ -70,7 +71,7 @@ public class Main {
     private static void welcomePanel(){
         //welcome menu
 
-        System.out.println("Please choose an option below: \n");
+        System.out.println("\nPlease choose an option below: \n");
 
         System.out.println("(1) Show items \n");
         System.out.println("(2) Add items \n");
@@ -134,59 +135,55 @@ public class Main {
                     System.out.println(t);
 
                 }
-                System.out.println("\n Please choose (1) descending  or (2) ascending to order the display data based on cost.");
+                System.out.println("\n Please choose (1) descending  or (2) ascending to order the display transactions.");
                 int order = scanner.nextInt();
 
+                /**
+                 * All the transactions are shown in descending order when the user selects
+                 * 1 for the option, to order the transactions in display
+                 */
                 if(order == 1){
-                    System.out.println("--- List of Transactions in descending order based on cost ---");
+                    System.out.println("--- List of Transactions in descending order based on cost, date  ---\n");
+                    System.out.println("Transactions in descending order based on cost \n");
                     Collections.sort(transactions, new DisplayAllTransactionsDescendCost());
                     for(int i=0; i<transactions.size(); i++)
                         System.out.println(transactions.get(i));
+
+//                    Collections.sort(transactions, new TransactionSortingDateCost());
+
+                    System.out.println("\nIn addition items are sorted according to month in descending order as follows :\n");
+
+                    List<Transactions> sortedList = transactions.stream()
+                            .sorted(Comparator.comparing(Transactions::getDateOfTransaction))
+                            .collect(Collectors.toList());
+                            sortedList.forEach(System.out::println);
+
                 }
 
+                /**
+                 * All the transactions are shown in ascending order when the user selects
+                 * 2 for the option, to order the transactions in display
+                 */
                 if(order == 2){
-                    System.out.println("--- List of Transactions in ascending order based on cost ---");
+                    System.out.println("--- List of Transactions in ascending order based on cost ---\n");
+                    System.out.println("Transactions in ascending order based on cost \n");
                     Collections.sort(transactions, new  DisplayAllTransactionsAscendCost());
                     for(int i=0; i<transactions.size(); i++)
                         System.out.println(i + ": " + transactions.get(i));
+
+                    System.out.println("\nIn addition items are sorted according to month as follows in ascending order: \n");
+                    List<Transactions> sortedList = transactions.stream()
+                            .sorted(Comparator.comparing(Transactions::getDateOfTransaction))
+                            .collect(Collectors.toList());
+                    sortedList.forEach(System.out::println);
+
+                    System.out.println("\nFinally items are sorted according to title as follows in ascending order:\n");
+                    List<Transactions> sortedList2 = transactions.stream()
+                            .sorted(Comparator.comparing(Transactions::getTitle))
+                            .collect(Collectors.toList());
+                    sortedList2.forEach(System.out::println);
                 }
 
-                Collections.sort(transactions, new  TransactionSortingDateCost());
-                System.out.println("\nIn addition items are sorted according to month as follows :\n");
-                for ( Transactions t : transactions) {
-                    System.out.println(t);
-                }
-
-//                -- sort by getDate ---
-//                List<Transactions> sortedList = transactions.stream()
-//                        .sorted(Comparator.comparingInt(Transactions::getDateOfTransaction))
-//                        .collect(Collectors.toList());
-//                        sortedList.forEach(System.out::println);
-
-//                -- sort by reversed getAge ---
-//                List<Transactions> sortedList = users.stream()
-//                        .sorted(Comparator.comparingInt(User::getAge)
-//                                .reversed())
-//                        .collect(Collectors.toList());
-//                sortedList.forEach(System.out::println);
-
-
-//                -- sort by name --
-//                List<Transactions> sortedList = users.stream()
-//                        .sorted(Comparator.comparingInt(User::getAge)
-//                                .reversed())
-//                        .collect(Collectors.toList());
-//                sortedList.forEach(System.out::println);
-
-
-//                List<Transactions> sortedList = transactions.stream().sorted().collect(Collectors.toList());
-//                sortedList.forEach(System.out::println);
-
-//                Collections.sort(transactions, new TransactionSortingDateCost());
-//                System.out.println("\nAnd finally items are sorted according to title as follows :\n");
-//                for (Transactions t : transactions) {
-//                    System.out.println(t);
-//                }
 
                 break;
             case 2:
@@ -345,7 +342,7 @@ public class Main {
        for (int i=0; i<transactions.size();i++){
            System.out.println(i + ": " + transactions.get(i));
        }
-       System.out.println("\nPlease enter index (on the left) of the item you wish to remove (eg. 1)");
+       System.out.println("\nPlease enter index (on the left) of the item you wish to edit (eg. 1)");
        int index = scanner.nextInt();
 
        System.out.println("\nPlease select the type of replacement transaction: (1) expense or (2) income.\n");
@@ -411,7 +408,7 @@ public class Main {
 
         //save the list of objects to Binary file
         Object obj = (Object) transactions;
-        binaryOperations.saveBinary(obj);
+        binaryOperations.saveBinary(obj, "Resources/UserData");
 
         //switch off the application and exit
         ON = false;

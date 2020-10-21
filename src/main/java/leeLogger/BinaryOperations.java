@@ -23,18 +23,20 @@ public class BinaryOperations implements Serializable {
      * @throws      IOException                 the file cannot be found or cannot be written to
      * @throws      ClassNotFoundException      the class is not found for the data transfer
      */
-    public static Object readBinary(){
+    public static Object readBinary(String fileName){
+        Object transactionsList = null;
         try{
-            FileInputStream fiStream = new FileInputStream("Resources/UserData");
+            FileInputStream fiStream = new FileInputStream(new File(fileName));
             ObjectInputStream iStream = new ObjectInputStream(fiStream);
-            Object transactionsList= iStream.readObject();
+            transactionsList= iStream.readObject();
             iStream.close();
-            System.err.println("From binary file: " + transactionsList);
+
             return transactionsList;
 
         }
         catch(IOException | ClassNotFoundException e){
-            return e.getMessage();
+            System.out.println(e.getMessage());
+            return transactionsList;
 
         }
     }
@@ -49,12 +51,12 @@ public class BinaryOperations implements Serializable {
      * @throws  IOException             if the file cannot be found or created, or the file
      *                                  cannot be opened
      */
-    public static void saveBinary(Object transactionList){
+    public static void saveBinary(Object transactionList, String fileName){
         try{
-            FileOutputStream foStream = new FileOutputStream("Resources/UserData");
+            FileOutputStream foStream = new FileOutputStream(fileName);
             ObjectOutputStream oStream = new ObjectOutputStream(foStream);
             oStream.writeObject(transactionList);
-            System.err.println("Transactions saved: "+ transactionList);
+
             oStream.close();
 
         }

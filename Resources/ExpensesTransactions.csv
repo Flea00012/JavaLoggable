@@ -1,5 +1,5 @@
- 1 - {EXPENSE, 01/12/2020, jeans, 400.0}
- 2 - {EXPENSE, 01/12/2020, shoes, 1000.0}
- 4 - {EXPENSE, 02/12/2020, shoes, 500.0}
- 5 - {EXPENSE, 10/18/2020, groceries, 1000.0}
- 6 - {EXPENSE, 12/12/2020, jeans, 500.0}
+ 3 - {EXPENSE, 12/12/2020, work, 10000.0}
+ 4 - {EXPENSE, 10/11/2020, jeans, 1000.0}
+ 5 - {EXPENSE, 09/10/2020, jacket, 1000.0}
+ 6 - {EXPENSE, 07/12/2020, shoes, 400.0}
+ 7 - {EXPENSE, 10/10/2020, shirt, 300.0}
