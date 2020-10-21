@@ -21,9 +21,9 @@ public class TransactionSortingDateCost implements Comparator< Transactions> {
      * The order is based on the date and the title for the transaction
      * object.
      *
-     * @param transaction1
-     * @param transaction2
-     * @return
+     * @param transaction1 transaction input to the compare method for sorting
+     * @param transaction2 transaction input to the compare method for sorting
+     * @return int integer returned to sort the transactions in natural order
      */
     @Override
     public int compare( Transactions transaction1,  Transactions transaction2) {
