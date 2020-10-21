@@ -48,10 +48,10 @@ public class Transactions implements  Serializable, Comparable<Transactions> {
      * Constructor makes the object of type Transaction with parameters that define the
      * transactions. The income field is boolean to allow true (income) and false (expense).
      *
-     * @param income
-     * @param dateOfTransaction
-     * @param title
-     * @param monetaryValue
+     * @param income                boolean the type of the transaction (based on Enum class for INCOME and EXPENSE) true is INCOME, false is EXPENSE
+     * @param dateOfTransaction     String
+     * @param title                 String title of the transaction eg. jeans or income
+     * @param monetaryValue         double this is the cost of the item
      */
     public Transactions(boolean income, String dateOfTransaction, String title, double monetaryValue) {
 
@@ -65,48 +65,80 @@ public class Transactions implements  Serializable, Comparable<Transactions> {
         this.monetaryValue = monetaryValue;
     }
 
+    /**
+     * Prints the objects of type transaction in String format for the user to read
+     *
+     * @return String the String object is returned for use in display to console and printing
+     */
     @Override
     public String toString() {
         return ("{" + this.itemType + ", " + this.dateOfTransaction +", "  + this.title + ", "  + this.monetaryValue + "}") ;
     }
 
+    /**
+     * Compared transaction of present object with transaction of another object
+     *
+     * @param o the transaction from another object of type Transaction
+     * @return int the value to allow sorting of the two objects in natural order
+     */
     @Override
     public int compareTo(Transactions o) {
         return (int) (this.getMonetaryValue()-o.getMonetaryValue());
     }
 
     /**
-     * Getters and Setters for the field variables
      *
+     * @return this.dateOfTransaction the date is returned for the transaction
      */
     public String getDateOfTransaction() {
         return this.dateOfTransaction;
     }
 
-
+    /**
+     *
+     * @return this.monetaryValue the cost is returned for the transaction
+     */
     public double getMonetaryValue() {
         return this.monetaryValue;
     }
 
-
+    /**
+     *
+     * @return this.title the title is returned for the transaction
+     */
     public String getTitle() {
         return this.title;
     }
 
 
-
+    /**
+     *
+     * @param itemType sets the type of transaction based on class Enum (INCOME and EXPENSE)
+     */
     public void setItemType(TransactionType itemType) {
         this.itemType = itemType;
     }
 
+    /**
+     *
+     * @param dateOfTransaction sets the date of the transaction
+     */
     public void setDateOfTransaction(String dateOfTransaction) {
         this.dateOfTransaction = dateOfTransaction;
     }
 
+    /**
+     *
+     * @param monetaryValue sets the cost of the transaction
+     */
     public void setMonetaryValue(double monetaryValue) {
         this.monetaryValue = monetaryValue;
     }
 
+    /**
+     *
+     * @param title sets the title for the transaction
+     */
     public void setTitle(String title) {
         this.title = title;
     }

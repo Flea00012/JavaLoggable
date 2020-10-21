@@ -73,6 +73,8 @@ public class FileHandler implements Serializable {
     /**
      * The {@code userInput} method takes in user input from a list of objects of type Transactions.
      * These objects are saved in to the Resources/AllTransactions.csv directory.
+     *
+     * @param list List<> the list object read in from the user containing a list of user transactions
      */
     public void userInput(List<Transactions> list) {
 

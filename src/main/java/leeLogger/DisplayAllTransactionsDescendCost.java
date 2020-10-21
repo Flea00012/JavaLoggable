@@ -1,7 +1,5 @@
 package leeLogger;
 
-import leeLogger.Transactions;
-
 import java.util.Comparator;
 
 /**
@@ -20,9 +18,9 @@ public class DisplayAllTransactionsDescendCost implements Comparator<Transaction
     /**
      * Sorts Transactions in Descending order of cost
      *
-     * @param o1
-     * @param o2
-     * @return int
+     * @param o1 Transaction this is the first transaction to compare
+     * @param o2 Transaction this is the second transaction to compare
+     * @return int this is the value used to order the two transactions in descending order
      */
     @Override
     public int compare(Transactions o1, Transactions o2) {

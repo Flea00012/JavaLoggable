@@ -20,8 +20,10 @@ public class BinaryOperations implements Serializable {
      * Method reads transactions from a binary file into a list
      * of type Object for use in data operations
      *
-     * @throws      IOException                 the file cannot be found or cannot be written to
-     * @throws      ClassNotFoundException      the class is not found for the data transfer
+     * @throws  IOException                 the file cannot be found or cannot be written to
+     * @throws  ClassNotFoundException      the class is not found for the data transfer
+     * @return Object                      returns an Object of data that contains list objects to be cast to type Transaction
+     * @param fileName The file that is read from
      */
     public static Object readBinary(String fileName){
         Object transactionsList = null;
@@ -48,6 +50,7 @@ public class BinaryOperations implements Serializable {
      * data
      *
      * @param   transactionList         a list of type Object that is saved to file
+     * @param   fileName                a file name specified for file storage
      * @throws  IOException             if the file cannot be found or created, or the file
      *                                  cannot be opened
      */

@@ -34,7 +34,7 @@ public class Main {
     /**
      * Method runs the application
      * at least once using a do-while loop
-     * @param args
+     * @param args String an argument in string format to run the application
      */
     public static void main(String[] args)  {
 
