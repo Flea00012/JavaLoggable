@@ -4,7 +4,7 @@ A banking application for logging transactions through the console written in Ja
 
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
-[![made-with-java 14](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.java.com/en/)
+[![made-with-java 14](https://img.shields.io/badge/Made%20with-Java 14-1f425f.svg)](https://www.java.com/en/)
 
 ## Brief Summary
 
