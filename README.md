@@ -2,6 +2,8 @@
 
 A banking application for logging transactions through the console written in Java
 
+[![Generic badge](https://img.shields.io/badge/<JAVA 14>-<ACTIVE>-<COLOR>.svg)](https://shields.io/)
+
 ## Brief Summary
 
 The application takes user input through the console and logs this information to the file directories specified internally in the application. If access to these files in required, it can be found in the "Resources/" directory for the project.
