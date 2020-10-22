@@ -3,8 +3,9 @@
 A banking application for logging transactions through the console written in Java
 
 
-[![Generic badge](https://img.shields.io/badge/<JAVA 14>-<ACTIVE>-<COLOR>.svg)](https://shields.io/)
+
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
+[![Generic badge](https://img.shields.io/badge/<JAVA 14>-<ACTIVE>-<COLOR>.svg)](https://shields.io/)
 
 ## Brief Summary
 
