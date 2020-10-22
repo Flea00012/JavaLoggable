@@ -43,7 +43,6 @@ public class BinaryOperations implements Serializable {
         }
     }
 
-
     /**
      * Method saves transactions to a binary file from a list
      * of type Object for use in data operations and storage of

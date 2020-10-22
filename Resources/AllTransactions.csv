@@ -5,3 +5,5 @@
  5 - {EXPENSE, 09/10/2020, jacket, 1000.0}
  6 - {EXPENSE, 07/12/2020, shoes, 400.0}
  7 - {EXPENSE, 10/10/2020, shirt, 300.0}
+ 8 - {EXPENSE, 12/12/2020, jeans, 500.0}
+ 9 - {INCOME, 2, 2, 3.0}

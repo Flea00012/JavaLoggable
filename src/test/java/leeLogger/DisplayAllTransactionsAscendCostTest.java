@@ -30,6 +30,7 @@ class DisplayAllTransactionsAscendCostTest extends DisplayAllTransactionsAscendC
     public void shouldEvaluateToFalseWhenCompareTwoDifferentTransactionTitles() {
         int result = test1.getTitle().compareTo(test2.getTitle());
         int expected = 0;
+        System.out.println("value is :" + result);
         assertNotEquals(expected,result);
     }
 
